@@ -36,18 +36,17 @@ btnContainer.appendChild(categoriesCard)
 Api()
 
 let startVideo=1000
-
-function categoriesBtn(categoryId){
+let sortStatus=false
+function categoriesBtn(categoryId,sortStatus){
 
     startVideo=categoryId;
 const URL=` https://openapi.programming-hero.com/api/videos/category/${categoryId}`    
 const API2=async ()=>{
-    const response=await fetch(URL)
-    const Data=await response.json()
-    const data=Data.data
-    console.log(data.length)
+    const res=await fetch(URL);
+let Data=await res.json()
+Data=Data.data
 
-    if(data.length===0){
+    if(Data.length===0){
         getId('error').classList.remove('hidden')
     }else{
         getId('error').classList.add('hidden')
@@ -58,7 +57,7 @@ videoContainer.innerHTML=''
 
 
 
-data.forEach((Video)=>{
+Data.forEach((Video)=>{
     // create video card
     let verified=''
     if(Video.authors[0].verified){
@@ -86,4 +85,4 @@ ${verified}
 
 API2()
 }
-categoriesBtn(startVideo)
+categoriesBtn(startVideo,sortStatus)
